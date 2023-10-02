@@ -1,4 +1,3 @@
-Imports Microsoft.VisualBasic
 Imports System
 Imports System.Collections.Generic
 Imports System.Windows.Forms
@@ -6,94 +5,87 @@ Imports DevExpress.XtraRichEdit.API.Native
 Imports DevExpress.XtraRichEdit
 
 Namespace RichEditDOCVARIABLEBasics
-	Partial Public Class Form1
-		Inherits Form
-		Public Sub New()
-			InitializeComponent()
 
-			Dim details As New List(Of DetailInfo)()
+    Public Partial Class Form1
+        Inherits Form
 
-			details.Add(New DetailInfo(1, "Detail1"))
-			details.Add(New DetailInfo(2, "Detail2"))
+        Public Sub New()
+            InitializeComponent()
+            Dim details As List(Of DetailInfo) = New List(Of DetailInfo)()
+            details.Add(New DetailInfo(1, "Detail1"))
+            details.Add(New DetailInfo(2, "Detail2"))
+            richEditControl1.Options.MailMerge.DataSource = details
+            AddHandler richEditControl1.Document.CalculateDocumentVariable, New CalculateDocumentVariableEventHandler(AddressOf Document_CalculateDocumentVariable)
+            richEditControl1.LoadDocument("Template.rtf")
+            ShowFieldCodes()
+        End Sub
 
-			richEditControl1.Options.MailMerge.DataSource = details
+        Private Sub button1_Click(ByVal sender As Object, ByVal e As EventArgs)
+            richEditControl1.LoadDocument("Template.rtf")
+            ShowFieldCodes()
+        End Sub
 
-			AddHandler richEditControl1.Document.CalculateDocumentVariable, AddressOf Document_CalculateDocumentVariable
+        Private Sub button2_Click(ByVal sender As Object, ByVal e As EventArgs)
+            Dim myMergeOptions As MailMergeOptions = richEditControl1.Document.CreateMailMergeOptions()
+            myMergeOptions.MergeMode = MergeMode.NewParagraph
+            Dim server As RichEditDocumentServer = New RichEditDocumentServer()
+            AddHandler server.CalculateDocumentVariable, New CalculateDocumentVariableEventHandler(AddressOf Document_CalculateDocumentVariable)
+            richEditControl1.Document.MailMerge(myMergeOptions, server.Document)
+            richEditControl1.CreateNewDocument()
+            richEditControl1.Document.AppendDocumentContent(server.Document.Range)
+        End Sub
 
-			richEditControl1.LoadDocument("Template.rtf")
-			ShowFieldCodes()
-		End Sub
+        Private Sub Document_CalculateDocumentVariable(ByVal sender As Object, ByVal e As CalculateDocumentVariableEventArgs)
+            Dim detailId As Integer = -1
+            If Integer.TryParse(e.Arguments(0).Value, detailId) Then
+                Dim server As RichEditDocumentServer = New RichEditDocumentServer()
+                Dim path As String = String.Format("{0}\Detail{1}.rtf", IO.Directory.GetCurrentDirectory(), detailId.ToString())
+                server.LoadDocument(path)
+                e.Value = server
+                e.Handled = True
+            End If
+        End Sub
 
-		Private Sub button1_Click(ByVal sender As Object, ByVal e As EventArgs) Handles button1.Click
-			richEditControl1.LoadDocument("Template.rtf")
-			ShowFieldCodes()
-		End Sub
+        Private Sub ShowFieldCodes()
+            Dim doc As Document = richEditControl1.Document
+            doc.BeginUpdate()
+            For Each f As Field In doc.Fields
+                f.ShowCodes = True
+            Next
 
-		Private Sub button2_Click(ByVal sender As Object, ByVal e As EventArgs) Handles button2.Click
-			Dim myMergeOptions As MailMergeOptions = richEditControl1.Document.CreateMailMergeOptions()
-			myMergeOptions.MergeMode = MergeMode.NewParagraph
+            doc.EndUpdate()
+        End Sub
+    End Class
 
-			Dim server As New RichEditDocumentServer()
+    Public Class DetailInfo
 
-			AddHandler server.CalculateDocumentVariable, AddressOf Document_CalculateDocumentVariable
-			richEditControl1.Document.MailMerge(myMergeOptions, server.Document)
+        Private id As Integer
 
-			richEditControl1.CreateNewDocument()
-			richEditControl1.Document.AppendDocumentContent(server.Document.Range)
-		End Sub
+        Public Property DetailId As Integer
+            Get
+                Return id
+            End Get
 
-		Private Sub Document_CalculateDocumentVariable(ByVal sender As Object, ByVal e As DevExpress.XtraRichEdit.CalculateDocumentVariableEventArgs)
-			Dim detailId As Integer = -1
+            Set(ByVal value As Integer)
+                id = value
+            End Set
+        End Property
 
-			If Int32.TryParse(e.Arguments(0).Value, detailId) Then
-				Dim server As New RichEditDocumentServer()
+        Private descriptionField As String
 
-				Dim path As String = String.Format("{0}\Detail{1}.rtf", System.IO.Directory.GetCurrentDirectory(), detailId.ToString())
+        Public Property Description As String
+            Get
+                Return descriptionField
+            End Get
 
-				server.LoadDocument(path)
+            Set(ByVal value As String)
+                descriptionField = value
+            End Set
+        End Property
 
-				e.Value = server
-				e.Handled = True
-			End If
-		End Sub
-
-		Private Sub ShowFieldCodes()
-			Dim doc As Document = richEditControl1.Document
-			doc.BeginUpdate()
-			For Each f As Field In doc.Fields
-				f.ShowCodes = True
-			Next f
-			doc.EndUpdate()
-		End Sub
-
-	End Class
-
-	Public Class DetailInfo
-		Private id As Integer
-
-		Public Property DetailId() As Integer
-			Get
-				Return id
-			End Get
-			Set(ByVal value As Integer)
-				id = value
-			End Set
-		End Property
-		Private description_Renamed As String
-
-		Public Property Description() As String
-			Get
-				Return description_Renamed
-			End Get
-			Set(ByVal value As String)
-				description_Renamed = value
-			End Set
-		End Property
-
-		Public Sub New(ByVal id As Integer, ByVal description As String)
-			Me.DetailId = id
-			Me.Description = description
-		End Sub
-	End Class
-
+        Public Sub New(ByVal id As Integer, ByVal description As String)
+            DetailId = id
+            Me.Description = description
+        End Sub
+    End Class
 End Namespace
