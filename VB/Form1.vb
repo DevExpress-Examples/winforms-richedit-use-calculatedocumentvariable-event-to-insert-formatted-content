@@ -1,22 +1,19 @@
 Imports System
 Imports System.Collections.Generic
-Imports System.Windows.Forms
 Imports DevExpress.XtraRichEdit.API.Native
 Imports DevExpress.XtraRichEdit
 
 Namespace RichEditDOCVARIABLEBasics
 
     Public Partial Class Form1
-        Inherits Form
+        Inherits DevExpress.XtraEditors.XtraForm
 
         Public Sub New()
             InitializeComponent()
-            Dim details As List(Of DetailInfo) = New List(Of DetailInfo)()
-            details.Add(New DetailInfo(1, "Detail1"))
-            details.Add(New DetailInfo(2, "Detail2"))
+            Dim details As List(Of DetailInfo) = New List(Of DetailInfo) From {New DetailInfo(1, "Documents//Detail1"), New DetailInfo(2, "Documents//Detail2")}
             richEditControl1.Options.MailMerge.DataSource = details
             AddHandler richEditControl1.Document.CalculateDocumentVariable, New CalculateDocumentVariableEventHandler(AddressOf Document_CalculateDocumentVariable)
-            richEditControl1.LoadDocument("Template.rtf")
+            richEditControl1.LoadDocument("Documents//Template.rtf")
             ShowFieldCodes()
         End Sub
 
@@ -39,7 +36,7 @@ Namespace RichEditDOCVARIABLEBasics
             Dim detailId As Integer = -1
             If Integer.TryParse(e.Arguments(0).Value, detailId) Then
                 Dim server As RichEditDocumentServer = New RichEditDocumentServer()
-                Dim path As String = String.Format("{0}\Detail{1}.rtf", IO.Directory.GetCurrentDirectory(), detailId.ToString())
+                Dim path As String = String.Format("{0}\Documents\Detail{1}.rtf", IO.Directory.GetCurrentDirectory(), detailId.ToString())
                 server.LoadDocument(path)
                 e.Value = server
                 e.Handled = True
