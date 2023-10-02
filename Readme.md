@@ -8,6 +8,7 @@
 
 This example illustrates how to use the [Document.CalculateDocumentVariable](https://docs.devexpress.com/OfficeFileAPI/DevExpress.XtraRichEdit.API.Native.Document.CalculateDocumentVariable) event to insert formatted content. The [DOCVARIABLE](https://docs.devexpress.com/WindowsForms/9721/controls-and-libraries/rich-text-editor/fields/field-codes/docvariable) has a parameter specified by the [MERGEFIELD](https://docs.devexpress.com/WindowsForms/9714/controls-and-libraries/rich-text-editor/fields/field-codes/mergefield) field and looks as follows:
 
+`{ DOCVARIABLE DetailInfo "{ MERGEFIELD DetailId }" }`
 
 The formatted content is loaded into a non-visual [RichEditDocumentServer](https://docs.devexpress.com/OfficeFileAPI/DevExpress.XtraRichEdit.RichEditDocumentServer) component, which in turn is assigned to the `e.Value` parameter of a `CalculateDocumentVariable` event handler.
 
