@@ -30,9 +30,9 @@ namespace RichEditDOCVARIABLEBasics {
             // 
             // richEditControl1
             // 
-            this.richEditControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.richEditControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richEditControl1.Location = new System.Drawing.Point(12, 50);
             this.richEditControl1.Name = "richEditControl1";
             this.richEditControl1.Size = new System.Drawing.Size(960, 450);

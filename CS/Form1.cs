@@ -5,20 +5,22 @@ using DevExpress.XtraRichEdit.API.Native;
 using DevExpress.XtraRichEdit;
 
 namespace RichEditDOCVARIABLEBasics {
-    public partial class Form1 : Form {
+    public partial class Form1 : DevExpress.XtraEditors.XtraForm
+    {
         public Form1() {
             InitializeComponent();
 
-            List<DetailInfo> details = new List<DetailInfo>();
-
-            details.Add(new DetailInfo(1, "Detail1"));
-            details.Add(new DetailInfo(2, "Detail2"));
+            List<DetailInfo> details = new List<DetailInfo>
+            {
+                new DetailInfo(1, "Documents//Detail1"),
+                new DetailInfo(2, "Documents//Detail2")
+            };
 
             richEditControl1.Options.MailMerge.DataSource = details;
 
-            richEditControl1.Document.CalculateDocumentVariable += new DevExpress.XtraRichEdit.CalculateDocumentVariableEventHandler(Document_CalculateDocumentVariable);
+            richEditControl1.Document.CalculateDocumentVariable += new CalculateDocumentVariableEventHandler(Document_CalculateDocumentVariable);
 
-            richEditControl1.LoadDocument("Template.rtf");
+            richEditControl1.LoadDocument("Documents//Template.rtf");
             ShowFieldCodes();
         }
 
@@ -40,13 +42,14 @@ namespace RichEditDOCVARIABLEBasics {
             richEditControl1.Document.AppendDocumentContent(server.Document.Range);
         }
 
-        void Document_CalculateDocumentVariable(object sender, DevExpress.XtraRichEdit.CalculateDocumentVariableEventArgs e) {
+        void Document_CalculateDocumentVariable(object sender, CalculateDocumentVariableEventArgs e)
+        {
             int detailId = -1;
 
             if (Int32.TryParse(e.Arguments[0].Value, out detailId)) {
                 RichEditDocumentServer server = new RichEditDocumentServer();
 
-                string path = string.Format("{0}\\Detail{1}.rtf", System.IO.Directory.GetCurrentDirectory(), detailId.ToString());
+                string path = string.Format("{0}\\Documents\\Detail{1}.rtf", System.IO.Directory.GetCurrentDirectory(), detailId.ToString());
 
                 server.LoadDocument(path);
 
