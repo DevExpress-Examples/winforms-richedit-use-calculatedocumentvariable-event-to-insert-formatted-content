@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using DevExpress.XtraRichEdit.API.Native;
 using DevExpress.XtraRichEdit;
 
@@ -25,7 +24,7 @@ namespace RichEditDOCVARIABLEBasics {
         }
 
         private void button1_Click(object sender, EventArgs e) {
-            richEditControl1.LoadDocument("Template.rtf");
+            richEditControl1.LoadDocument("Documents//Template.rtf");
             ShowFieldCodes();
         }
 

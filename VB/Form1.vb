@@ -18,7 +18,7 @@ Namespace RichEditDOCVARIABLEBasics
         End Sub
 
         Private Sub button1_Click(ByVal sender As Object, ByVal e As EventArgs)
-            richEditControl1.LoadDocument("Template.rtf")
+            richEditControl1.LoadDocument("Documents//Template.rtf")
             ShowFieldCodes()
         End Sub
 
