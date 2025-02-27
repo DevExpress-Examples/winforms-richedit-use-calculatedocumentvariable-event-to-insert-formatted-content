@@ -1,5 +1,3 @@
-Imports System
-Imports System.Collections.Generic
 Imports DevExpress.XtraRichEdit.API.Native
 Imports DevExpress.XtraRichEdit
 
@@ -12,7 +10,7 @@ Namespace RichEditDOCVARIABLEBasics
             InitializeComponent()
             Dim details As List(Of DetailInfo) = New List(Of DetailInfo) From {New DetailInfo(1, "Documents//Detail1"), New DetailInfo(2, "Documents//Detail2")}
             richEditControl1.Options.MailMerge.DataSource = details
-            AddHandler richEditControl1.Document.CalculateDocumentVariable, New CalculateDocumentVariableEventHandler(AddressOf Document_CalculateDocumentVariable)
+            richEditControl1.Document.CalculateDocumentVariable += New CalculateDocumentVariableEventHandler(AddressOf Document_CalculateDocumentVariable)
             richEditControl1.LoadDocument("Documents//Template.rtf")
             ShowFieldCodes()
         End Sub
@@ -26,7 +24,7 @@ Namespace RichEditDOCVARIABLEBasics
             Dim myMergeOptions As MailMergeOptions = richEditControl1.Document.CreateMailMergeOptions()
             myMergeOptions.MergeMode = MergeMode.NewParagraph
             Dim server As RichEditDocumentServer = New RichEditDocumentServer()
-            AddHandler server.CalculateDocumentVariable, New CalculateDocumentVariableEventHandler(AddressOf Document_CalculateDocumentVariable)
+            server.CalculateDocumentVariable += New CalculateDocumentVariableEventHandler(AddressOf Document_CalculateDocumentVariable)
             richEditControl1.Document.MailMerge(myMergeOptions, server.Document)
             richEditControl1.CreateNewDocument()
             richEditControl1.Document.AppendDocumentContent(server.Document.Range)
@@ -34,9 +32,9 @@ Namespace RichEditDOCVARIABLEBasics
 
         Private Sub Document_CalculateDocumentVariable(ByVal sender As Object, ByVal e As CalculateDocumentVariableEventArgs)
             Dim detailId As Integer = -1
-            If Integer.TryParse(e.Arguments(0).Value, detailId) Then
+            If Int32.TryParse(e.Arguments(0).Value, detailId) Then
                 Dim server As RichEditDocumentServer = New RichEditDocumentServer()
-                Dim path As String = String.Format("{0}\Documents\Detail{1}.rtf", IO.Directory.GetCurrentDirectory(), detailId.ToString())
+                Dim path As String = String.Format("{0}\Documents\Detail{1}.rtf", System.IO.Directory.GetCurrentDirectory(), detailId.ToString())
                 server.LoadDocument(path)
                 e.Value = server
                 e.Handled = True

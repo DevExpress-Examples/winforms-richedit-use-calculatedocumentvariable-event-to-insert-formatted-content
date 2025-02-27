@@ -46,7 +46,7 @@ Namespace RichEditDOCVARIABLEBasics
             Me.button2.TabIndex = 4
             Me.button2.Text = "MailMerge"
             Me.button2.UseVisualStyleBackColor = True
-            AddHandler Me.button2.Click, New System.EventHandler(AddressOf Me.button2_Click)
+            Me.button2.Click += New System.EventHandler(AddressOf Me.button2_Click)
             ' 
             ' button1
             ' 
@@ -56,7 +56,7 @@ Namespace RichEditDOCVARIABLEBasics
             Me.button1.TabIndex = 5
             Me.button1.Text = "Restore template"
             Me.button1.UseVisualStyleBackColor = True
-            AddHandler Me.button1.Click, New System.EventHandler(AddressOf Me.button1_Click)
+            Me.button1.Click += New System.EventHandler(AddressOf Me.button1_Click)
             ' 
             ' Form1
             ' 
