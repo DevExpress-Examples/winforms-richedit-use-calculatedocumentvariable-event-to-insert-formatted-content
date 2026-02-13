@@ -28,7 +28,7 @@ The formatted content is loaded into a non-visual [RichEditDocumentServer](https
 * [DOCVARIABLE Field](https://docs.devexpress.com/WindowsForms/9721/controls-and-libraries/rich-text-editor/fields/field-codes/docvariable)
 * [How to: Insert Dynamic Content](https://docs.devexpress.com/WindowsForms/401204/controls-and-libraries/rich-text-editor/examples/automation/how-to-insert-dynamic-content)
 <!-- feedback -->
-## Does this example address your development requirements/objectives?
+## Does This Example Address Your Development Requirements/Objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=winforms-richedit-use-calculatedocumentvariable-event-to-insert-formatted-content&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=winforms-richedit-use-calculatedocumentvariable-event-to-insert-formatted-content&~~~was_helpful=no)
 
