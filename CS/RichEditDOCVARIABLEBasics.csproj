@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net8.0-windows</TargetFramework>
+        <TargetFramework>net10.0-windows</TargetFramework>
         <OutputType>WinExe</OutputType>
 	    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
 	    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
@@ -21,6 +21,6 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="DevExpress.Win.RichEdit" Version="23.1.*" />
+        <PackageReference Include="DevExpress.Win.RichEdit" Version="26.1.*" />
     </ItemGroup>
 </Project>
